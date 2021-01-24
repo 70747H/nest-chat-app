@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  nestchat:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=dev
+    image: nest-chat-docker
+    container_name: nestchat
+    restart: always
+    tty: true
+    ports:
+      - 3001
+    working_dir: /var/www/nest-chat
+    environment:
+      SERVICE_NAME: nestchat
+      SERVICE_TAGS: dev
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: postgres
+    volumes:
+      - ./:/var/www/nest-chat
+      - /var/www/nest-chat/node_modules
+    networks:
+      - nest-chat-network
+  postgres:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5432
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - POSTGRES_DB=vapulus
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123456
+    networks:
+      - nest-chat-network
+
+networks:
+  nest-chat-network:
+    driver: bridge
+volumes:
+  post_data: { }
