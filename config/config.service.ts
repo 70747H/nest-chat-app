@@ -18,7 +18,6 @@ class ConfigService {
   public getTypeORMConfig(): TypeOrmModuleOptions {
     const baseDir = path.join(__dirname, '../');
     const entitiesPath = `${baseDir}${this.envConfig.TYPEORM_ENTITIES}`;
-    Logger.error('a7eeeeeeeeeh', JSON.stringify(entitiesPath));
     const migrationPath = `${baseDir}${this.envConfig.TYPEORM_MIGRATIONS}`;
     const type: any = this.envConfig.DATABASE_TYPE;
     return {
@@ -49,7 +48,6 @@ class ConfigService {
 	  including the applied default values.
   */
   private static validateInput(envConfig: IEnvConfigInterface): IEnvConfigInterface {
-    Logger.error('a7aaaaaaaaa', JSON.stringify(envConfig));
     const envVarsSchema: Joi.ObjectSchema = Joi.object({
       NODE_ENV: Joi.string()
         .valid('development', 'testing')
