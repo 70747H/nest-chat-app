@@ -3,6 +3,8 @@ services:
   nestchat:
     depends_on:
       - postgres
+    links:
+      - postgres:postgres
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,13 +15,26 @@ services:
     restart: always
     tty: true
     ports:
-      - 3001
+      - 3000:3000
     working_dir: /var/www/nest-chat
     environment:
-      SERVICE_NAME: nestchat
-      SERVICE_TAGS: dev
-      POSTGRES_PORT: 5432
-      POSTGRES_HOST: postgres
+      - NODE_ENV=development
+      - NODE_PORT=3001
+      - JWT_SECRET=TopSecretHighlyClassified=D
+      - DATABASE_TYPE=postgres
+      - DATABASE_HOST=localhost
+      - DATABASE_PORT=5432
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres123456
+      - DATABASE_NAME=vapulus
+      - TYPEORM_SYNC=true
+      - TYPEORM_ENTITIES=**/*.entity{.ts,.js}
+      - TYPEORM_MIGRATIONS=db/migrations/*{.ts,.js}
+      - TYPEORM_MIGRATIONS_RUN=src/db/migrations
+      - TYPEORM_MIGRATIONS_DIR=src/db/migrations
+      - TYPEORM_LOGGING=true
+      - TYPEORM_MAX_QUERY_EXECUTION_TIME=1000
+
     volumes:
       - ./:/var/www/nest-chat
       - /var/www/nest-chat/node_modules
@@ -33,9 +48,9 @@ services:
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
-      - POSTGRES_DB=vapulus
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres123456
+      - DATABASE_NAME=vapulus
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres123456
     networks:
       - nest-chat-network
 

@@ -1,7 +1,9 @@
-import { IsOptional, IsIn, IsDefined, IsString, IsNotEmpty, IsNumberString, IsNumber } from 'class-validator';
+import {IsOptional, IsDefined, IsNotEmpty, IsNumber} from 'class-validator';
 import {Transform} from "class-transformer";
+import {ApiProperty} from "@nestjs/swagger";
 
 export class GetMessageFilterDto {
+  @ApiProperty()
   @IsOptional()
   @IsDefined()
   @IsNotEmpty()
@@ -9,6 +11,7 @@ export class GetMessageFilterDto {
   @Transform(parseInt)
   userId: number;
 
+  @ApiProperty()
   @IsOptional()
   @IsDefined()
   @IsNotEmpty()

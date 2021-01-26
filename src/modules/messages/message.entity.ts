@@ -1,5 +1,5 @@
 import { TimeStampEntity } from "../../generics/timestamp.entities";
-import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "../auth/user.entity";
 import {Room} from "../rooms/room.entity";
 

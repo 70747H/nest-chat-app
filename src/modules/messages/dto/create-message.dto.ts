@@ -1,18 +1,22 @@
-import { IsDefined, IsString, IsNotEmpty, IsIn, IsOptional, IsNumber } from 'class-validator';
+import {IsDefined, IsString, IsNotEmpty, IsNumber} from 'class-validator';
+import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateMessageDto {
-    @IsDefined()
-    @IsString()
-    @IsNotEmpty()
-    text: string;
+  @ApiProperty()
+  @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  text: string;
 
-    @IsDefined()
-    @IsNumber()
-    @IsNotEmpty()
-    userId: number;
+  @ApiProperty()
+  @IsDefined()
+  @IsNumber()
+  @IsNotEmpty()
+  userId: number;
 
-    @IsDefined()
-    @IsNumber()
-    @IsNotEmpty()
-    roomId: number;
+  @ApiProperty()
+  @IsDefined()
+  @IsNumber()
+  @IsNotEmpty()
+  roomId: number;
 }

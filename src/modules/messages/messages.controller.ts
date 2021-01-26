@@ -1,20 +1,21 @@
-import {Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards} from '@nestjs/common';
 import {User} from "../auth/user.entity";
 import {GetUser} from "../auth/get-user.decorator";
 import {MessagesService} from "./messages.service";
 import {Message} from "./message.entity";
-import {GetMessageFilterDto} from "./dto/get-message-filter.dto";
 import {CreateMessageDto} from "./dto/create-message.dto";
 import {UpdateMessageDto} from "./dto/update-message.dto";
+import {AuthGuard} from "@nestjs/passport";
 
+@UseGuards(AuthGuard())
 @Controller('messages')
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {
   }
 
   @Get()
-  getAllMessages(@Query() getMessageFilterDto: GetMessageFilterDto, @GetUser() user: User): Promise<Message[]> {
-    return this.messagesService.getMessages(getMessageFilterDto);
+  getAllMessages(@GetUser() user: User): Promise<Message[]> {
+    return this.messagesService.getMessages();
   }
 
   @Get('/:id')
@@ -23,7 +24,6 @@ export class MessagesController {
   }
 
   @Post()
-  // @UsePipes(ValidationPipe)
   createMessage(@Body() createMessageDto: CreateMessageDto, @GetUser() user: User): Promise<Message> {
     return this.messagesService.createMessage(createMessageDto);
   }

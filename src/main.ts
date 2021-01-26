@@ -1,16 +1,18 @@
-import { Logger } from '@nestjs/common';
-import { ValidationPipe } from '@nestjs/common/pipes';
-import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import {Logger} from '@nestjs/common';
+import {ValidationPipe} from '@nestjs/common/pipes';
+import {NestFactory} from '@nestjs/core';
 import {SwaggerModule} from '@nestjs/swagger';
-import { AppModule } from './app.module';
-import { QueryFailedExceptionFilter } from './filters/query-failed-exception.filter';
-import { swaggerOptions } from './options/swagger.options';
+import {AppModule} from './app.module';
+import {swaggerOptions} from './options/swagger.options';
+import ConfigService from "../config/config.service";
+
+/*
+* */
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
-  app.enableCors({ origin: configService.get('origin') });
+  // app.enableCors({origin: configService.get('origin')});
   const logger = new Logger();
   app.useGlobalPipes(
     /**
@@ -26,7 +28,7 @@ async function bootstrap() {
        * Detailed error messages since this is 4xx
        */
       disableErrorMessages: false,
-      
+
       validationError: {
         /**
          * WARNING: Avoid exposing the values in the error output (could leak sensitive information)
@@ -41,11 +43,11 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  app.useGlobalFilters(new (QueryFailedExceptionFilter));
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('docs', app, document);
-  const port = configService.get('port');
+  const port = configService.getServerConfig().port;
   await app.listen(port);
   logger.log(`App is listening on port: ${port}.`);
 }
+
 bootstrap();

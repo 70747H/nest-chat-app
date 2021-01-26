@@ -12,12 +12,15 @@ $ npm install
 
 ```bash
 # development
-$ NODE_ENV=development npm run migrate:all 
+$ NODE_ENV=dev npm run migrate:all 
 $ npm run start
 
 # watch mode
-$ NODE_ENV=development npm run migrate:all 
+$ NODE_ENV=dev npm run migrate:all 
 $ npm run start:dev
+
+# docker mode
+$ docker-compose up --build
 
 ```
 
@@ -36,7 +39,13 @@ $ npm run test:cov
 ```
 
 ## API-Docs
-#### Swagger API documentation at localhost:8000/docs
+#### Swagger API documentation at localhost:3001/docs
+
+## Code-Docs
+Run the following command and code documentation will be available at http://127.0.0.1:8080
+```bash
+$ npx @compodoc/compodoc -p tsconfig.json -s  
+```
 
 ## Support
 

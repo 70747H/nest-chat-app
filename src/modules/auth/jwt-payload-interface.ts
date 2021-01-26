@@ -1,3 +1,9 @@
+/**
+ * Jwt Payload
+ */
 export interface JwtPayload {
-    username: string;
+  /**
+   * Username
+   */
+  username: string;
 }
