@@ -28,5 +28,5 @@ RUN npm install --unsafe-perm
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
-EXPOSE 3000
+EXPOSE 3001
 CMD [ "npm", "run", "start:dev" ]

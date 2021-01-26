@@ -4,7 +4,7 @@ import {NestFactory} from '@nestjs/core';
 import {SwaggerModule} from '@nestjs/swagger';
 import {AppModule} from './app.module';
 import {swaggerOptions} from './options/swagger.options';
-import ConfigService from "../config/config.service";
+import {ConfigService} from "@nestjs/config";
 
 /*
 * */
@@ -45,7 +45,7 @@ async function bootstrap() {
   );
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('docs', app, document);
-  const port = configService.getServerConfig().port;
+  const port = configService.get('port');
   await app.listen(port);
   logger.log(`App is listening on port: ${port}.`);
 }

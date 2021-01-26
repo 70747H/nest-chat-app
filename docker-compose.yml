@@ -15,26 +15,19 @@ services:
     restart: always
     tty: true
     ports:
-      - 3000:3000
+      - 3001:3001
     working_dir: /var/www/nest-chat
     environment:
-      - NODE_ENV=development
       - NODE_PORT=3001
-      - JWT_SECRET=TopSecretHighlyClassified=D
       - DATABASE_TYPE=postgres
-      - DATABASE_HOST=localhost
+      - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=postgres123456
       - DATABASE_NAME=vapulus
       - TYPEORM_SYNC=true
-      - TYPEORM_ENTITIES=**/*.entity{.ts,.js}
-      - TYPEORM_MIGRATIONS=db/migrations/*{.ts,.js}
-      - TYPEORM_MIGRATIONS_RUN=src/db/migrations
-      - TYPEORM_MIGRATIONS_DIR=src/db/migrations
       - TYPEORM_LOGGING=true
-      - TYPEORM_MAX_QUERY_EXECUTION_TIME=1000
-
+      - TYPEORM_MAX_QUERY_EXECUTION_TIME=10000
     volumes:
       - ./:/var/www/nest-chat
       - /var/www/nest-chat/node_modules
@@ -46,11 +39,11 @@ services:
     ports:
       - 5432
     environment:
-      - DATABASE_HOST=postgres
+      - DATABASE_HOST=localhost
       - DATABASE_PORT=5432
-      - DATABASE_NAME=vapulus
+      - POSTGRES_DB=vapulus
       - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres123456
+      - POSTGRES_PASSWORD=postgres123456
     networks:
       - nest-chat-network
 
